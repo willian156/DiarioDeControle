@@ -87,7 +87,7 @@ public class LoginController {
             stmt.setString(1, txt_login.getText().toString());
             /*stmt.setInt(2, Integer.parseInt(textAge.getText().toString()));
             stmt.setString(3, textLogin.getText().toString());*/
-            stmt.setString(4, txt_senha.getText().toString());
+            stmt.setString(2, txt_senha.getText().toString());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
