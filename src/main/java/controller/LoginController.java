@@ -1,13 +1,15 @@
 package controller;
 
-import com.sun.tools.javac.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Login;
 
@@ -19,14 +21,26 @@ import java.util.ArrayList;
 public class LoginController {
     @FXML
     Button btnLogar;
+    @FXML
     Button btnCadastro;
     @FXML
     TextField
             txt_login,
             txt_senha;
+    public static Login usuarioLogado;
+
+
+    //chamar a tela com a anterior aberta:
+    /*Stage stage = new Stage();
+    Parent root = FXMLLoader.load(getClass().getResource("/fxml/Cadastro.fxml"));
+            stage.setScene(new Scene(root));
+            stage.setTitle("My modal window");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+            stage.show();*/
 
     public void login(ActionEvent event) throws SQLException, IOException {
-        System.out.println("TESTE BOTÃO!");
+
         Connection connection;
         connection = DriverManager.getConnection("jdbc:sqlite:ProjetoDB.db");
         Statement stmt;
@@ -49,19 +63,36 @@ public class LoginController {
         String login = txt_login.getText();
         String password = txt_senha.getText();
         //validar login
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
         for (Login u : listUsers){
             if(u.getLogin().equals(login) && u.getPassword().equals(password)){
-                System.out.println("Login ok");
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/diarios_menu.fxml"));
+                usuarioLogado = u;
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
+                stage.setScene(new Scene(root));
+                stage.setTitle("Diário Menu");
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+                stage.show();
+
+               //comentado até segundas ordens
+                /*FXMLLoader loader = new FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
                 Stage stage = (Stage) btnLogar.getScene().getWindow();
                 Scene scene = new Scene(loader.load());
-                stage.setScene(scene);
+                stage.setScene(scene);*/
 
                 break;
             }
 
         }
+    }
+
+    //retornar o id do usuário atual
+    public void IdLogin(Login idlogin){
+        idlogin = new Login();
+        final int usuario = idlogin.getId();
     }
 
     public void checkConnection(ActionEvent event) throws SQLException {
@@ -85,8 +116,6 @@ public class LoginController {
             String save = "insert into Logins (Login, Password) values (?, ?)";
             stmt = connection.prepareStatement(save);
             stmt.setString(1, txt_login.getText().toString());
-            /*stmt.setInt(2, Integer.parseInt(textAge.getText().toString()));
-            stmt.setString(3, textLogin.getText().toString());*/
             stmt.setString(2, txt_senha.getText().toString());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -110,43 +139,4 @@ public class LoginController {
         }
     }
 
-    public void search(ActionEvent event) throws SQLException {
-       /* Connection connection;
-        connection = DriverManager.getConnection("jdbc:sqlite:unifaesp.db");
-        PreparedStatement stmt;
-        ResultSet rst;
-        String search = "select *from users where id = ?";
-        stmt = connection.prepareStatement(search);
-        stmt.setInt(1, "id");
-        rst = stmt.executeQuery();
-        while(rst.next()){
-            txt_login.setText(rst.getString("login"));
-            txt_senha.setText(rst.getString("password"));
-        }
-        rst.close();
-        stmt.close();*/
-
-    }
-
-    /*public void update(ActionEvent event) throws SQLException {
-        Connection connection;
-        connection = DriverManager.getConnection("jdbc:sqlite:unifaesp.db");
-        PreparedStatement stmt;
-        if(connection != null){
-            String update = "update users set name = ?, age = ?, login = ?, password = ? where id = ?";
-            stmt = connection.prepareStatement(update);
-            stmt.setString(1, textName.getText().toString());
-            stmt.setInt(2, Integer.parseInt(textAge.getText().toString()));
-            stmt.setString(3, textLogin.getText().toString());
-            stmt.setString(4, textPassword.getText().toString());
-            stmt.setInt(5, Integer.parseInt(textSearch.getText().toString()));
-            if(stmt.execute() == false)
-                System.out.println("Registro Salvo com Sucesso");
-            else
-                System.out.println("Falha no cadastro");
-            stmt.close();
-
-        }
-
-    }*/
 }

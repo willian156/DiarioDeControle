@@ -7,6 +7,9 @@ public class Login {
     private String password;
 
 
+    public Login(){
+    }
+
     public int getId() {
         return id;
     }

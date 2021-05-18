@@ -1,5 +1,7 @@
 package models;
 
+import static controller.LoginController.usuarioLogado;
+
 public class Perfis {
 
     private int id;
@@ -8,6 +10,9 @@ public class Perfis {
     private String descricao;
     private int id_login;
 
+
+    public Perfis(){
+    }
 
     public int getId() {
         return id;
@@ -45,7 +50,9 @@ public class Perfis {
         return id_login;
     }
 
-    public void setId_login(int id_login) {
-        this.id_login = id_login;
+    public void setId_login(Login usuario) {
+        usuario  = new Login();
+        usuario = usuarioLogado;
+        this.id_login = usuario.getId();
     }
 }
