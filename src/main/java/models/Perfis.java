@@ -50,9 +50,7 @@ public class Perfis {
         return id_login;
     }
 
-    public void setId_login(Login usuario) {
-        usuario  = new Login();
-        usuario = usuarioLogado;
-        this.id_login = usuario.getId();
+    public void setId_login(int id_login) {
+        this.id_login = usuarioLogado.getId();
     }
 }

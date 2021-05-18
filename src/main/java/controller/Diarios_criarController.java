@@ -1,32 +1,19 @@
 package controller;
 
-import database.DbConnection;
 import javafx.fxml.FXML;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.Date;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import static controller.LoginController.usuarioLogado;
 import static database.DbConnection.getConnectionSqlite;
 
-public class Diarios_criarController {
+public class Diarios_criarController{
     @FXML
     TextArea txtDesc;
     @FXML
@@ -47,12 +34,11 @@ public class Diarios_criarController {
             stmt.execute();
             connection.close();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Diário salvo");
             alert.setContentText("Diário Salvo com Sucesso!");
             alert.show();
+
+
     }
-    
-
-
 }

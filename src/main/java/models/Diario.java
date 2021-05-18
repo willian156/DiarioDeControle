@@ -1,8 +1,5 @@
 package models;
 
-import java.sql.Date;
-import java.time.LocalDate;
-
 import static controller.LoginController.usuarioLogado;
 
 

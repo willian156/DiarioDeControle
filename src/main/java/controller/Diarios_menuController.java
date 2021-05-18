@@ -11,20 +11,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Diario;
+import models.Perfis;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
 
 import static controller.LoginController.usuarioLogado;
+import static dao.DiarioDAO.criarPerfil;
+import static dao.DiarioDAO.puxarPerfil;
+
 
 public class Diarios_menuController implements Initializable {
     @FXML
@@ -47,6 +47,7 @@ public class Diarios_menuController implements Initializable {
     TableColumn<Diario, String> CLdata;
 
     public static Diario diarioSelecionado;
+    public static Perfis perfilLogado;
 
 
 
@@ -59,8 +60,17 @@ public class Diarios_menuController implements Initializable {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
         stage.show();
+
     }
-    public void VerPerfil(){
+    public void VerPerfil(ActionEvent event)throws IOException{
+
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Perfil.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Ler diário");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+        stage.show();
 
     }
     public void LerDiario(ActionEvent event) throws IOException {
@@ -75,7 +85,18 @@ public class Diarios_menuController implements Initializable {
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
         stage.show();
     }
-    public void DeletarDiario(){
+    public void DeletarDiario(ActionEvent event)throws IOException{
+        diarioSelecionado = tbDiarios.getSelectionModel().getSelectedItem();
+        System.out.println("diario ID: "+ diarioSelecionado.getId());
+
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_deletar.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Deletar diário");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+        stage.show();
+
 
     }
 
@@ -85,6 +106,24 @@ public class Diarios_menuController implements Initializable {
         System.out.println("Usuário logado: ");
         System.out.println(usuarioLogado.getLogin());
         System.out.println(usuarioLogado.getId());
+
+        try {
+            perfilLogado = puxarPerfil(usuarioLogado.getId());
+        } catch (SQLException throwables) {
+            try {
+                perfilLogado = criarPerfil(usuarioLogado);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Perfil criado!");
+                alert.setContentText("Foi criado um perfil para você! Vá em 'ver perfil' para atualiza-lo!");
+                alert.show();
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Perfil não criado!");
+                alert.setContentText("Não foi possível criar o seu perfil!");
+                alert.show();
+            }
+        }
+
         this.CLid.setCellValueFactory(new PropertyValueFactory("id"));
         this.CLcriador.setCellValueFactory(new PropertyValueFactory("criador"));
         this.CLdata.setCellValueFactory(new PropertyValueFactory("data"));
@@ -93,7 +132,7 @@ public class Diarios_menuController implements Initializable {
         try {
             this.tbDiarios.setItems(this.DiarioList());
         } catch (SQLException var4) {
-            var4.printStackTrace();
+            System.out.println("ERRO AO OBTER A LISTA!");
         }
     }
 

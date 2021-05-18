@@ -1,5 +1,6 @@
 package controller;
 
+import dao.LoginDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,6 @@ public class LoginController {
             txt_senha;
     public static Login usuarioLogado;
 
-
     //chamar a tela com a anterior aberta:
     /*Stage stage = new Stage();
     Parent root = FXMLLoader.load(getClass().getResource("/fxml/Cadastro.fxml"));
@@ -38,6 +38,12 @@ public class LoginController {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
             stage.show();*/
+
+    //comentado até segundas ordens
+                /*FXMLLoader loader = new FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
+                Stage stage = (Stage) btnLogar.getScene().getWindow();
+                Scene scene = new Scene(loader.load());
+                stage.setScene(scene);*/
 
     public void login(ActionEvent event) throws SQLException, IOException {
 
@@ -77,11 +83,7 @@ public class LoginController {
                 stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
                 stage.show();
 
-               //comentado até segundas ordens
-                /*FXMLLoader loader = new FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
-                Stage stage = (Stage) btnLogar.getScene().getWindow();
-                Scene scene = new Scene(loader.load());
-                stage.setScene(scene);*/
+
 
                 break;
             }
@@ -89,54 +91,12 @@ public class LoginController {
         }
     }
 
-    //retornar o id do usuário atual
-    public void IdLogin(Login idlogin){
-        idlogin = new Login();
-        final int usuario = idlogin.getId();
-    }
-
-    public void checkConnection(ActionEvent event) throws SQLException {
-        //Testar a conexão ao banco
-        Connection connection;
-        connection = DriverManager.getConnection("jdbc:sqlite:ProjetoDB.db");
-        if(connection != null){
-            System.out.println("Conexão ok");
-        }
-        else{
-            System.out.println("Falha na conexão");
-        }
-    }
-
     public void cadastrar(ActionEvent event) throws SQLException {
-        Connection connection;
-        connection = DriverManager.getConnection("jdbc:sqlite:ProjetoDB.db");
-        PreparedStatement stmt;
-        if(connection != null){
-            //Cadastrar
-            String save = "insert into Logins (Login, Password) values (?, ?)";
-            stmt = connection.prepareStatement(save);
-            stmt.setString(1, txt_login.getText().toString());
-            stmt.setString(2, txt_senha.getText().toString());
+        Login login = new Login();
+        login.setLogin(txt_login.getText());
+        login.setPassword(txt_senha.getText());
+        LoginDAO.create(login);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-            if(stmt.execute() == false) {
-                alert.setTitle("Registro salvo");
-                alert.setContentText("Registro Salvo com Sucesso!");
-                alert.show();
-            }else {
-                alert.setTitle("Falha!");
-                alert.setContentText("Falha no registro!");
-                alert.show();
-                stmt.close();
-            }
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Falha no DB");
-            alert.setContentText("Falha na Conexão com Banco de Dados!");
-            alert.show();
-        }
     }
 
 }
