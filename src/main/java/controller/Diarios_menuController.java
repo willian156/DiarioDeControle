@@ -43,15 +43,19 @@ public class Diarios_menuController implements Initializable {
     TableColumn<Diario, String> CLcriador;
     @FXML
     TableColumn<Diario, String> CLdescricao;
+    @FXML
+    TableColumn<Diario, String> CLdata;
 
     public static Diario diarioSelecionado;
+
+
 
 
     public void  CriarDiario(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_criar.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Diários");
+        stage.setTitle("Criar diário");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
         stage.show();
@@ -59,16 +63,17 @@ public class Diarios_menuController implements Initializable {
     public void VerPerfil(){
 
     }
-    public void LerDiario(ActionEvent event){
-        /*diarioSelecionado = tbDiarios.getSelectionModel().getSelectedItem();
+    public void LerDiario(ActionEvent event) throws IOException {
+        diarioSelecionado = tbDiarios.getSelectionModel().getSelectedItem();
+        System.out.println("diario ID: "+ diarioSelecionado.getId());
 
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_ler.fxml"));
         stage.setScene(new Scene(root));
-        stage.setTitle("Diários");
+        stage.setTitle("Ler diário");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();*/
+        stage.show();
     }
     public void DeletarDiario(){
 
@@ -82,6 +87,7 @@ public class Diarios_menuController implements Initializable {
         System.out.println(usuarioLogado.getId());
         this.CLid.setCellValueFactory(new PropertyValueFactory("id"));
         this.CLcriador.setCellValueFactory(new PropertyValueFactory("criador"));
+        this.CLdata.setCellValueFactory(new PropertyValueFactory("data"));
         this.CLdescricao.setCellValueFactory(new PropertyValueFactory("descricao"));
 
         try {

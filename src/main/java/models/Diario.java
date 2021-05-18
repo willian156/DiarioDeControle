@@ -10,6 +10,7 @@ public class Diario {
 
     public int id;
     public String descricao;
+    public String data;
     public String criador;
     public int id_login;
 
@@ -47,5 +48,13 @@ public class Diario {
     public void setId_login(int id_login) {
 
         this.id_login = usuarioLogado.getId();
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

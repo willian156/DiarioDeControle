@@ -31,16 +31,19 @@ public class Diarios_criarController {
     TextArea txtDesc;
     @FXML
     Button btnSalvar;
+    @FXML
+    TextField txtData;
 
     public void Salvar() throws SQLException {
 
             Connection connection = getConnectionSqlite();
             PreparedStatement stmt;
-            String save = "insert into Diarios (Criador, Descricao, id_login) values (?, ?, ?)";
+            String save = "insert into Diarios (Criador, Data, Descricao, id_login) values (?, ?, ?, ?)";
             stmt = connection.prepareStatement(save);
             stmt.setString(1, usuarioLogado.getLogin());
-            stmt.setString(2, txtDesc.getText());
-            stmt.setInt(3, usuarioLogado.getId());
+            stmt.setString(2, txtData.getText());
+            stmt.setString(3, txtDesc.getText());
+            stmt.setInt(4, usuarioLogado.getId());
             stmt.execute();
             connection.close();
 

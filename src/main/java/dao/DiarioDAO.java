@@ -33,6 +33,7 @@ public class DiarioDAO {
             Diario diarios = new Diario();
             diarios.setId(rst.getInt("id"));
             diarios.setDescricao(rst.getString("Descricao"));
+            diarios.setData(rst.getString("Data"));
             diarios.setCriador(rst.getString("Criador"));
             diarios.setId_login(rst.getInt("Id_login"));
             listDiario.add(diarios);

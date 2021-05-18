@@ -34,7 +34,8 @@
         <columns>
           <TableColumn fx:id="CLid" prefWidth="75.0" text="Id" />
             <TableColumn fx:id="CLcriador" prefWidth="75.0" text="Criador" />
-            <TableColumn fx:id="CLdescricao" prefWidth="660.0" text="Descrição" />
+            <TableColumn fx:id="CLdata" prefWidth="99.0" text="Data" />
+            <TableColumn fx:id="CLdescricao" prefWidth="637.0" text="Descrição" />
         </columns>
       </TableView>
    </children>
