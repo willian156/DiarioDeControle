@@ -4,7 +4,6 @@ import database.DbConnection;
 import models.Diario;
 import models.Login;
 import models.Perfis;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,20 +43,6 @@ public class DiarioDAO {
         rst.close();
         connection.close();
         return listDiario;
-    }
-
-    public static void update(Diario diario) throws SQLException {
-        Connection connection = DbConnection.getConnectionSqlite();
-        if (connection != null) {
-            String update = "update Diarios set Data = ?, Criador = ?, Descricao = ? where id_login = ?";
-            PreparedStatement stmt = connection.prepareStatement(update);
-            stmt.setString(1, diario.getData());
-            stmt.setString(2, diario.getCriador());
-            stmt.setString(3, diario.getDescricao());
-            stmt.setInt(4, diario.getId_login());
-            stmt.close();
-        }
-
     }
 
     public static Perfis puxarPerfil(int id) throws SQLException {

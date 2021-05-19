@@ -13,8 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Login;
-
-
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
