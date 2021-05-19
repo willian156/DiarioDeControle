@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -32,5 +33,15 @@
             <Font name="Calibri" size="18.0" />
          </font>
       </TextField>
+      <Button fx:id="btnVoltar" layoutX="879.0" layoutY="18.0" mnemonicParsing="false" onAction="#Voltar" text="Voltar">
+         <font>
+            <Font name="Calibri" size="22.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnImprimir" layoutX="755.0" layoutY="18.0" mnemonicParsing="false" onAction="#Imprimir" text="Imprimir">
+         <font>
+            <Font name="Calibri" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
