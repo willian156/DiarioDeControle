@@ -1,6 +1,5 @@
 package controller;
 
-import dao.LoginDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +14,9 @@ import javafx.stage.Stage;
 import models.Login;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
+
+import static dao.LoginDAO.logar;
+import static dao.LoginDAO.create;
 
 public class LoginController {
     @FXML
@@ -28,64 +29,24 @@ public class LoginController {
             txt_senha;
     public static Login usuarioLogado;
 
-    //chamar a tela com a anterior aberta:
-    /*Stage stage = new Stage();
-    Parent root = FXMLLoader.load(getClass().getResource("/fxml/Cadastro.fxml"));
-            stage.setScene(new Scene(root));
-            stage.setTitle("My modal window");
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-            stage.show();*/
-
-    //comentado até segundas ordens
-                /*FXMLLoader loader = new FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
-                Stage stage = (Stage) btnLogar.getScene().getWindow();
-                Scene scene = new Scene(loader.load());
-                stage.setScene(scene);*/
-
     public void login(ActionEvent event) throws SQLException, IOException {
 
-        Connection connection;
-        connection = DriverManager.getConnection("jdbc:sqlite:ProjetoDB.db");
-        Statement stmt;
-        ResultSet rst;
-        stmt = connection.createStatement();
-        rst = stmt.executeQuery("select *from Logins");
-        ArrayList<Login> listUsers = new ArrayList<Login>();
+        Login login = new Login();
 
-        //Pegar os itens do resultset e inserir na lista
-        while(rst.next()){
-            Login u = new Login();
-            u.setId(rst.getInt("id"));
-            u.setLogin(rst.getString("login"));
-            u.setPassword(rst.getString("password"));
-            listUsers.add(u);
-        }
-        rst.close();
-        connection.close();
-        //login
-        String login = txt_login.getText();
-        String password = txt_senha.getText();
-        //validar login
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        login.setLogin(txt_login.getText());
+        login.setPassword(txt_senha.getText());
 
-        for (Login u : listUsers){
-            if(u.getLogin().equals(login) && u.getPassword().equals(password)){
+        int log = logar(login);
 
-                usuarioLogado = u;
-                Stage stage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
-                stage.setScene(new Scene(root));
-                stage.setTitle("Diário Menu");
-                stage.initModality(Modality.WINDOW_MODAL);
-                stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-                stage.show();
+        if(log == 1){
 
+            scenes.DiariosScene.menuSc(event);
 
-
-                break;
-            }
-
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Usuário não encontrado!");
+            alert.setContentText("Usuário não encontrado! Por favor, verifique seu login e senha.");
+            alert.show();
         }
     }
 
@@ -93,8 +54,7 @@ public class LoginController {
         Login login = new Login();
         login.setLogin(txt_login.getText());
         login.setPassword(txt_senha.getText());
-        LoginDAO.create(login);
+        create(login);
 
     }
-
 }

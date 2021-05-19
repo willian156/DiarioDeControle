@@ -1,12 +1,15 @@
 package controller;
 
 import database.DbConnection;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +26,7 @@ public class Diarios_deletarController implements Initializable {
     Button btnSim,
            btnNao;
 
-    public void Sim() throws SQLException {
+    public void Sim(ActionEvent event) throws SQLException, IOException {
         Connection connection = DbConnection.getConnectionSqlite();
         String delete = "delete from Diarios where id = ?";
         PreparedStatement stmt = connection.prepareStatement(delete);
@@ -35,10 +38,8 @@ public class Diarios_deletarController implements Initializable {
         alert.setTitle("Diário deletado");
         alert.setContentText("Diário deletado com Sucesso!");
         alert.show();
-
         Stage stage = (Stage)btnSim.getScene().getWindow();
         stage.close();
-
     }
     public void Nao(){
         Stage stage = (Stage)btnNao.getScene().getWindow();

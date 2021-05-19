@@ -22,8 +22,8 @@ import java.util.ResourceBundle;
 import java.io.IOException;
 
 import static controller.LoginController.usuarioLogado;
-import static dao.DiarioDAO.criarPerfil;
-import static dao.DiarioDAO.puxarPerfil;
+import static dao.PerfisDAO.criarPerfil;
+import static dao.PerfisDAO.puxarPerfil;
 
 
 public class Diarios_menuController implements Initializable {
@@ -35,6 +35,8 @@ public class Diarios_menuController implements Initializable {
     Button btnLerDiario;
     @FXML
     Button btnDeletarDiario;
+    @FXML
+    Button btnAtualizar;
     @FXML
     TableView<Diario> tbDiarios;
     @FXML
@@ -53,51 +55,72 @@ public class Diarios_menuController implements Initializable {
 
 
     public void  CriarDiario(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
+
+        scenes.DiariosScene.criarSc(event);
+
+        /*Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_criar.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Criar diário");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();
+        stage.show();*/
 
     }
     public void VerPerfil(ActionEvent event)throws IOException{
 
-        Stage stage = new Stage();
+        scenes.DiariosScene.perfilSc(event);
+
+        /*Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Perfil.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Ler diário");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();
+        stage.show();*/
 
     }
     public void LerDiario(ActionEvent event) throws IOException {
         diarioSelecionado = tbDiarios.getSelectionModel().getSelectedItem();
         System.out.println("diario ID: "+ diarioSelecionado.getId());
 
-        Stage stage = new Stage();
+        scenes.DiariosScene.lerSc(event);
+
+        /*Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_ler.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Ler diário");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();
+        stage.show();*/
     }
     public void DeletarDiario(ActionEvent event)throws IOException{
         diarioSelecionado = tbDiarios.getSelectionModel().getSelectedItem();
         System.out.println("diario ID: "+ diarioSelecionado.getId());
 
-        Stage stage = new Stage();
+        scenes.DiariosScene.deletarSc(event);
+
+        /*Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_deletar.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Deletar diário");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
+        stage.show();*/
+
+
+    }
+
+    public void Atualizar(ActionEvent event)throws IOException{
+        Stage stage = (Stage)btnAtualizar.getScene().getWindow();
+        stage.close();
+        stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Menu");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
         stage.show();
-
-
     }
 
 
