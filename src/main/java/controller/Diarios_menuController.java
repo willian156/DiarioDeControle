@@ -58,27 +58,11 @@ public class Diarios_menuController implements Initializable {
 
         scenes.DiariosScene.criarSc(event);
 
-        /*Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_criar.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Criar diário");
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();*/
 
     }
     public void VerPerfil(ActionEvent event)throws IOException{
 
         scenes.DiariosScene.perfilSc(event);
-
-        /*Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Perfil.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Ler diário");
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();*/
-
     }
     public void LerDiario(ActionEvent event) throws IOException {
         diarioSelecionado = tbDiarios.getSelectionModel().getSelectedItem();
@@ -86,13 +70,6 @@ public class Diarios_menuController implements Initializable {
 
         scenes.DiariosScene.lerSc(event);
 
-        /*Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_ler.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Ler diário");
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();*/
     }
     public void DeletarDiario(ActionEvent event)throws IOException{
         diarioSelecionado = tbDiarios.getSelectionModel().getSelectedItem();
@@ -100,29 +77,26 @@ public class Diarios_menuController implements Initializable {
 
         scenes.DiariosScene.deletarSc(event);
 
-        /*Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_deletar.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Deletar diário");
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();*/
+    }
+
+    public void Atualizar()throws IOException{
+        att();
 
 
     }
 
-    public void Atualizar(ActionEvent event)throws IOException{
-        Stage stage = (Stage)btnAtualizar.getScene().getWindow();
-        stage.close();
-        stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/diarios_menu.fxml"));
-        stage.setScene(new Scene(root));
-        stage.setTitle("Menu");
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(((Node)event.getSource()).getScene().getWindow() );
-        stage.show();
-    }
+    public void att() throws IOException{
+        this.CLid.setCellValueFactory(new PropertyValueFactory("id"));
+        this.CLcriador.setCellValueFactory(new PropertyValueFactory("criador"));
+        this.CLdata.setCellValueFactory(new PropertyValueFactory("data"));
+        this.CLdescricao.setCellValueFactory(new PropertyValueFactory("descricao"));
 
+        try {
+            this.tbDiarios.setItems(this.DiarioList());
+        } catch (SQLException var4) {
+            System.out.println("ERRO AO OBTER A LISTA!");
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

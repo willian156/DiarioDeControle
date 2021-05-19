@@ -1,6 +1,9 @@
 package controller;
 
 import javafx.fxml.FXML;
+
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -8,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import static controller.LoginController.usuarioLogado;
 import static database.DbConnection.getConnectionSqlite;
@@ -21,7 +23,7 @@ public class Diarios_criarController{
     @FXML
     TextField txtData;
 
-    public void Salvar() throws SQLException {
+    public void Salvar() throws SQLException, IOException {
 
             Connection connection = getConnectionSqlite();
             PreparedStatement stmt;
@@ -38,7 +40,6 @@ public class Diarios_criarController{
             alert.setTitle("Diário salvo");
             alert.setContentText("Diário Salvo com Sucesso!");
             alert.show();
-
 
     }
 }

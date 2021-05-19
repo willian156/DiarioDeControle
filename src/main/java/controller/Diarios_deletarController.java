@@ -38,6 +38,8 @@ public class Diarios_deletarController implements Initializable {
         alert.setTitle("Diário deletado");
         alert.setContentText("Diário deletado com Sucesso!");
         alert.show();
+
+
         Stage stage = (Stage)btnSim.getScene().getWindow();
         stage.close();
     }
